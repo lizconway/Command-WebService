@@ -39,5 +39,3 @@ It displays a filterable list of Commandments.  This list is created by calling 
 Each Commandment in the list is linked with its own page.  Each page contains a list of _translations_.  The translation list is created by calling the getTranslations() method of the Web Service, which sends the translations as a JSON object.
 
 Images for the project are served from an online server.
-
-
