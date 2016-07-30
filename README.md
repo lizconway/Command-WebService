@@ -5,6 +5,8 @@ This web service takes data from a database and exposes it a JSON object.
 
 Going to the default page takes you to a page where you can :
  *  View the JSON string for all commandments
+ *  View the JSON string for a single commandment
+ *  View the JSON string for subsets of the commandments
  *  View the JSON string for all translations
 
 This web service uses CodeIgniter and its MVC pattern:
@@ -40,12 +42,17 @@ CodeIgniter's URI routing is used to make a more user-friendly URI when accessin
  * Instead of using `index.php/CommandCtrl/getTranlations` you can use `index.php/translations` to retrieve all of the tranlations.
  * You can also retrieve a subset of the commandments by using `index.php/commandments/1/10`, to retrieve commandments 1 to 10 (use any numbers between 1 and 11).  If a higher number is put first the commandments will be retrieved in reverse order.  E.g. `index.php/commandments/8/3` will retrieve the commandments starting with 8 and working backwards to 3.
  * You can also retrieve a single commandment with the URI `index.php/commandment/5`, to retrieve only commandment 5 for example.
+
+Customer Error Handler
+----------------------
+There is a custom routing used to override the Error handler for '404 Page not found' errors.  
+The custom error handler is `Error404.php`.
  
 ## Consumer
 This is the Web App that uses the JSON data served by the Web Service.
 
-It displays a filterable list of Commandments.  This list is created by calling the getCommandments method of the Web Service, which in turn sends on the Commandments as a JSON object.
+It displays a filterable list of Commandments.  This list is created by calling the `index.php/commandments` endpoint of the Web Service, which in turn sends on the Commandments as a JSON object.  This consumer always requests all the Commandments, not any subset of Commandments.
 
-Each Commandment in the list is linked with its own page.  Each page contains a list of _translations_.  The translation list is created by calling the getTranslations() method of the Web Service, which sends the translations as a JSON object.
+Each Commandment in the list is linked with its own page.  Each page contains a list of _translations_.  The translation list is created by calling the `index.php/translations` endpoint of the Web Service, which sends the translations as a JSON object.
 
 Images for the project are served from an online server.
