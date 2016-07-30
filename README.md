@@ -1,7 +1,4 @@
-# Command-WebService
-Web Service to serve JSON data for the Ten Commandments app (included).  Includes a mobile version of Ten commandments app
-
-## Command
+# WebService
 Web Service to serve commandments and their translations for consumption in JSON data format.  For use by the Ten Commandments app.
 
 This web service takes data from a database and exposes it a JSON object.
@@ -9,7 +6,6 @@ This web service takes data from a database and exposes it a JSON object.
 Going to the default page takes you to a page where you can :
  *  View the JSON string for all commandments
  *  View the JSON string for all translations
- *  View the JSON string for a number of the commandments [from -> to] by number
 
 This web service uses CodeIgniter and its MVC pattern:
  *  Controller - The logic and the glue between the model and the view.  The controller methods define the public API (Endpoints) for this Web Service.
@@ -32,11 +28,19 @@ The main conventions used are :
  		Hence `commandments` and not `Commandments`.
 
 Base URL
-========
+--------
 On my local PC this project is in _C:\xampp\htdocs\ServerSide\Assessment\WebService_.  
 In .htaccess the RewriteBase command is written as `RewriteBase /ServerSide/Assessment/WebService/`  
-In application/config/config.php the base_url is set as `$config['base_url'] = 'http://localhost/ServerSide/Assessment/WebService/';`
+In application/config/config.php the base_url is set as `$config['base_url'] = 'http://localhost/ServerSide/Assessment/WebService/';
 
+URI Routing
+-----------
+CodeIgniter's URI routing is used to make a more user-friendly URI when accessing the commandments and data.
+ * Instead of using `index.php/CommandCtrl/getCommandments/0/0` you can use `index.php/commandments` to retrieve all of the commandments.
+ * Instead of using `index.php/CommandCtrl/getTranlations` you can use `index.php/translations` to retrieve all of the tranlations.
+ * You can also retrieve a subset of the commandments by using `index.php/commandments/1/10`, to retrieve commandments 1 to 10 (use any numbers between 1 and 11).  If a higher number is put first the commandments will be retrieved in reverse order.  E.g. `index.php/commandments/8/3` will retrieve the commandments starting with 8 and working backwards to 3.
+ * You can also retrieve a single commandment with the URI `index.php/commandment/5`, to retrieve only commandment 5 for example.
+ 
 ## Consumer
 This is the Web App that uses the JSON data served by the Web Service.
 
