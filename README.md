@@ -31,6 +31,12 @@ The main conventions used are :
  *	All rest service names should use strict low case names.  
  		Hence `commandments` and not `Commandments`.
 
+Base URL
+========
+On my local PC this project is in _C:\xampp\htdocs\ServerSide\Assessment\WebService_.  
+In .htaccess the RewriteBase command is written as `RewriteBase /ServerSide/Assessment/WebService/`  
+In application/config/config.php the base_url is set as `$config['base_url'] = 'http://localhost/ServerSide/Assessment/WebService/';`
+
 ## Consumer
 This is the Web App that uses the JSON data served by the Web Service.
 
