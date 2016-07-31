@@ -1,5 +1,5 @@
 # WebService
-Web Service to serve commandments and their translations for consumption in JSON data format.  For use by the Ten Commandments app.
+A CodeIgniter generated Web Service to serve commandments and their translations for consumption in JSON data format.  For use by the Ten Commandments app.
 
 This web service takes data from a database and exposes it a JSON object.
 
@@ -8,6 +8,7 @@ Going to the default page takes you to a page where you can :
  *  View the JSON string for a single commandment
  *  View the JSON string for subsets of the commandments
  *  View the JSON string for all translations
+ *  View the JSON string for a single translation
 
 This web service uses CodeIgniter and its MVC pattern:
  *  Controller - The logic and the glue between the model and the view.  The controller methods define the public API (Endpoints) for this Web Service.
@@ -46,18 +47,20 @@ CodeIgniter's URI routing is used to make a more user-friendly URI when accessin
  * You can retrieve a particular translation by supplying the txt you want translated as a parameter.  E.g. `translations/srsly`.  
 Only one translation can be retrieved in this manner.  If multiple parameters are used the WebService will combine them and search for a translation for the combined parameters - including a slash between them.  E.g `translations/w/end` will search for a translation for the string "_w/end_".
 This WebService allows searching for translations for text with spaces, e.g. `translations/4 now`.  
-Certain characters are disallowed in the URI and so text containing these characters cannot be searched for even if they exist in the database.   Therefore word like "m&d" or "Oh hai!" cannot be searched for.
+Certain characters are disallowed in the URI and so text containing these characters cannot be searched for even if they exist in the database.  `permitted_uri_chars` configuration was updated in the config.php to allow words like "_m&d_" or "_Oh hai!_" to be searched for.
 
-Customer Error Handler
-----------------------
+Errors
+------
 There is a custom routing used to override the Error handler for '404 Page not found' errors.  
-The custom error handler is `Error404.php`.
+The custom error handler is `Error404.php`.  
+If you enter a parameter that does not exist an empty JSON object is returned.  E.g. `commandments/13`, or `translations/whatever` will return `{"commandments":[]}` and `{"textSpeak":[]}` respectively.  
+If you enter a negative parameter for the commandments a 404 error is thrown.
  
 ## Consumer
 This is the Web App that uses the JSON data served by the Web Service.
 
-It displays a filterable list of Commandments.  This list is created by calling the `index.php/commandments` endpoint of the Web Service, which in turn sends on the Commandments as a JSON object.  This consumer always requests all the Commandments, not any subset of Commandments.
+It displays a filterable list of Commandments.  This list is created by calling the `commandments` endpoint of the Web Service, which in turn sends on the Commandments as a JSON object.  This consumer always requests all the Commandments, not any subset of Commandments.
 
-Each Commandment in the list is linked with its own page.  Each page contains a list of _translations_.  The translation list is created by calling the `index.php/translations` endpoint of the Web Service, which sends the translations as a JSON object.
+Each Commandment in the list is linked with its own page.  Each page contains a list of _translations_.  The translation list is created by calling the `translations` endpoint of the Web Service, which sends the translations as a JSON object.
 
 Images for the project are served from an online server.
